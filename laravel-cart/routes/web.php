@@ -26,4 +26,6 @@ Route::put('/product/{product}/update', [ProductController::class, 'update'])->n
 Route::delete('/product/{product}/delete', [ProductController::class, 'delete'])->name('product.delete');
 
 
+Auth::routes();
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
