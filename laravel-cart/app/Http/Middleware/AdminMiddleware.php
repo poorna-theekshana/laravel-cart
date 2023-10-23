@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            if (Auth::user()->role == '1') {
+            if (Auth::users()->role == '1') {
                 return $next($request);
             } else {
                 return redirect('/product')->with('message', 'Access Denied as you are not a Admin!');
