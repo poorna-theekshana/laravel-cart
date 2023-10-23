@@ -1,46 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Products</title>
-</head>
-<body>
-    <h1>Create a Products</h1>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h1>Create a Product</h1>
     <div>
         @if($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{$error}}</li>
-                
             @endforeach
         </ul>
-            
         @endif
     </div>
+
     <form action="{{route('product.store')}}" method="post">
         @csrf
         @method('post')
-        <div>
+
+        <div class="form-group">
             <label for="pdct_name">Name :</label>
-            <input type="text" name="pdct_name" placeholder="Product Name" required>
+            <input type="text" class="form-control" name="pdct_name" placeholder="Product Name" required>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="pdct_description">Description :</label>
-            <input type="text" name="pdct_description" placeholder="Product Desc" required>
+            <input type="text" class="form-control" name="pdct_description" placeholder="Product Description" required>
         </div>
-        <div>
-            <label for="pdct_price">Price : Rs. </label>
-            <input type="number" step="any" name="pdct_price" placeholder="Product Price" required>
+
+        <div class="form-group">
+            <label for="pdct_price">Price : Rs.</label>
+            <input type="number" step="any" class="form-control" name="pdct_price" placeholder="Product Price" required>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="pdct_qty">Quantity :</label>
-            <input type="number" name="pdct_qty" placeholder="Product Qty" required>
+            <input type="number" class="form-control" name="pdct_qty" placeholder="Product Quantity" required>
         </div>
-        <div>
-            <input type="submit" value="add a new product">
-        </div>
+
+        <button type="submit" class="btn btn-primary">Add a new product</button>
     </form>
-</body>
-</html>
+</div>
+@endsection

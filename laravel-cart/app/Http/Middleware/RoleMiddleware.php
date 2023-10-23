@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,15 @@ class RoleMiddleware
             return $next($request);
         }
 
-        return redirect('/product')->with('message', 'Access Denied.');
+        return redirect('/home')->with('message', 'Access Denied.')->with('alert', 'danger');
     }
+
+    public function viewroles()
+    {
+        $roles = User::pluck('role', 'id'); 
+        return view('product.index', ['role' => $roles]);
+    }
+
 }
 
 
