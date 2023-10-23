@@ -1,22 +1,15 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Product') }}</title>
-
-    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-
 <body>
     <div id="app">
         <main class="py-4">
@@ -32,13 +25,16 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page"
-                                    href="{{ route('product.index') }}">Product Details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">User Details</a>
-                            </li>
+                            @if (auth()->user())
+                                @if (auth()->user()->role == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ route('product.index') }}">Product Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ route('user.viewuser') }}">User Details</a>
+                                </li>
+                                @endif
+                            @endif
                         </ul>
                         <ul class="navbar-nav ms-auto ml-auto">
                             @guest
@@ -47,7 +43,6 @@
                                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                     </li>
                                 @endif
-
                                 @if (Route::has('register'))
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -64,13 +59,10 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </li>
@@ -94,5 +86,4 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 </body>
-
 </html>

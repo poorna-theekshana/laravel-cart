@@ -11,9 +11,9 @@ class ProductController extends Controller
     public function welcomeproducts()
     {
         $products = Product::all();
-        return view('welcomeproducts', ['products' => $products]);
-
+        return view('welcome', ['products' => $products]);
     }
+
     public function index()
     {
         $products = Product::all();
@@ -21,7 +21,6 @@ class ProductController extends Controller
 
     }
 
-    
     public function create()
     {
         return view('product.create');
