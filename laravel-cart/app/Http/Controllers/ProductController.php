@@ -33,7 +33,14 @@ class ProductController extends Controller
             'pdct_description' => 'required',
             'pdct_price' => 'required | decimal:0,2',
             'pdct_qty' => 'required | numeric',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $imagePath = $imageFile->store('public/assets/images/product_images');
+            $data['image'] = str_replace('public/', 'storage/', $imagePath);
+        }
 
         $newProduct = Product::create($data);
 
