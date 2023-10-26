@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class CartItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'pdct_name',
-        'pdct_description',
-        'pdct_price',
+        'id',
         'pdct_qty',
-        'image',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

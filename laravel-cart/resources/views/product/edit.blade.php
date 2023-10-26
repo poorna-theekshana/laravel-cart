@@ -37,6 +37,15 @@
             <input type="number" class="form-control" name="pdct_qty" placeholder="Product Quantity" value="{{$product->pdct_qty}}" required>
         </div>
 
+        <div class="form-group">
+            <label for="current_image">Current Image:</label>
+            <img src="{{ asset($product->image) }}" class="img-thumbnail resized-edit-image" alt="{{ $product->pdct_name }}">
+        </div>
+        <div class="form-group">
+            <label for="image">Change Image:</label>
+            <input type="file" class="form-control-file" name="image" accept="image/*">
+        </div>
+
         <button type="submit" class="btn btn-primary">Update Product</button>
     </form>
 </div>
