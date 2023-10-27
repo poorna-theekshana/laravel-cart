@@ -1,31 +1,12 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
- */
-
- 
-
+//Admin Access Routes
 Route::group(['middleware' => 'isAdmin'], function () {
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
@@ -38,29 +19,27 @@ Route::group(['middleware' => 'isAdmin'], function () {
 
 });
 
+Route::get('/cart', [CartController::class, 'index'])->name('cart.viewcart');
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+
+//User Access Routes
 Route::group(['middleware' => 'isUser'], function () {
+    
 });
 
+//Common Access Routes
 Route::group([], function () {
-    Auth::routes();
+    
     Route::get('/', [ProductController::class, 'welcomeproducts'])->name('welcome');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
+Auth::routes();
 
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+// Route::delete('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
 
-use Illuminate\Support\Facades\Mail;
+// // Route to remove a product from the cart
+// Route::delete('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
 
-Route::get('/send-test-email', function () {
-    Mail::raw('Test email content', function ($message) {
-        $message->to('poornatheekshana@outlook.com');
-        $message->subject('Test Email');
-    });
-
-    return "Test email sent successfully.";
-});
-
+// // Route to checkout
+// Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');

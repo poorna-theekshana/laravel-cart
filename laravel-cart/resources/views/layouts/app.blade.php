@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +12,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/libs/css/laravelapp.css') }}">
 </head>
+
 <body>
     <div id="app">
         <main class="py-4">
@@ -28,13 +30,30 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             @if (auth()->user())
                                 @if (auth()->user()->role == 1)
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ route('product.index') }}">Product Details</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ route('user.viewuser') }}">User Details</a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page"
+                                            href="{{ route('product.index') }}">Product Details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page"
+                                            href="{{ route('user.viewuser') }}">User Details</a>
+                                    </li>
                                 @endif
+
+
+                                <?php 
+                                    if(auth()->user()->role == 0){
+                                ?>
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                        href="{{ route('cart.viewcart') }}">Cart</a>
+                                </li>
+
+                                <?php
+                                    }
+                                ?>
+
                             @endif
                         </ul>
                         <ul class="navbar-nav ms-auto ml-auto">
@@ -63,7 +82,8 @@
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
                                             @csrf
                                         </form>
                                     </li>
@@ -74,7 +94,9 @@
                 </div>
             </nav>
             @yield('Dashboard')
-            @yield('content')
+            <div class="container">
+                @yield('content')
+            </div>
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -87,4 +109,5 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 </body>
+
 </html>
