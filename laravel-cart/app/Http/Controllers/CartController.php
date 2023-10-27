@@ -10,64 +10,82 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function viewCart()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $user = Auth::user();
-        $cart = $user->cart;
-
-        return view('cart.view', ['cart' => $cart]);
+        $cartItems = CartItem::all();
+        return view('cart.viewcart', ['cartItems' => $cartItems]);
     }
 
     public function addToCart(Request $request)
     {
         $productId = $request->input('id');
+        $productName = $request->input('pdct_name');
         $quantity = $request->input('pdct_qty');
-
-        // Retrieve the product by its ID
         $product = Product::find($productId);
 
         if (!$product) {
             return redirect()->route('welcome')->with('error', 'Product not found.');
         }
 
-        // Check if the user already has a cart; if not, create one
         $user = Auth::user();
         $cart = $user->cart ?? new Cart();
+        $cart->user_id = $user->id;
+        $cart->save();
 
-        // Check if the product is already in the cart; if yes, update quantity
-        $existingItem = $cart->items->where('product_id', $productId)->first();
-        if ($existingItem) {
-            $existingItem->quantity += $quantity;
-            $existingItem->save();
-        } else {
-            // If not, create a new cart item
-            $cartItem = new CartItem([
-                'id' => $productId,
-                'pdct_qty' => $quantity,
-                // Add other necessary fields
-            ]);
-            $cart->items()->save($cartItem);
-        }
+        $cartItem = new CartItem();
+        $cartItem->cart_id = $cart->id;
+        $cartItem->product_id = $productId;
+        $cartItem->quantity = $quantity;
+        $cartItem->save();
 
-        // Save the cart
-        $user->cart()->save($cart);
-
-        return redirect()->route('cart.view')->with('success', 'Product added to cart.');
+        return redirect()->route('cart.cartview');
     }
 
-    public function removeFromCart(Request $request)
+    public function create()
     {
-        $cartItemId = $request->input('cart_item_id');
+        //
+    }
 
-        // Retrieve the cart item by its ID
-        $cartItem = CartItem::find($cartItemId);
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-        if ($cartItem) {
-            // Delete the cart item
-            $cartItem->delete();
-            return redirect()->route('cart.view')->with('success', 'Product removed from cart.');
-        }
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
 
-        return redirect()->route('cart.view')->with('error', 'Product not found in the cart.');
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
