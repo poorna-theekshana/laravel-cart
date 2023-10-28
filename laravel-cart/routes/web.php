@@ -19,7 +19,7 @@ Route::group(['middleware' => 'isAdmin'], function () {
 
 });
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.viewcart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
 
 //User Access Routes

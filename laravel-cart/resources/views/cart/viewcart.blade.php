@@ -5,7 +5,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Order ID</th>
+                    <th>User ID</th>
                     <th>Product ID</th>
                     <th>Quantity</th>
                 </tr>
@@ -14,7 +14,7 @@
                 @foreach ($cartItems as $cartItem)
                     <tr>
                         <td>{{ $cartItem->id }}</td>
-                        <td>{{ $cartItem->product->pdct_name }}</td>
+                        <td>{{ $cartItem->product_id }}</td>
                         <td>{{ $cartItem->quantity }}</td>
                         {{-- <td><img src="{{ asset($product->image) }}" class="card-img-top resized-table-image"
                                     alt="{{ $product->pdct_name }}"></td>

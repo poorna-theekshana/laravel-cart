@@ -6,7 +6,11 @@
             {{ session('success') }}
         </div>
     @endif
-
+    @if (session()->has('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
     <div class="row top-space ">
         @foreach (array_chunk($products->all(), 3) as $chunk)
             @foreach ($chunk as $product)
@@ -18,7 +22,15 @@
                             <p class="card-text">{{ $product->pdct_description }}</p>
                             <p class="card-text">Price: {{ $product->pdct_price }}</p>
                             <p class="card-text">Available Quantity: {{ $product->pdct_qty }}</p>
-                            <a href="{{ route('cart.addToCart', ['id' => $product->id, 'pdct_name' => $product->pdct_name,'pdct_qty' => 1]) }}" class="btn btn-primary">Add to Cart</a>
+                            {{-- <a href="{{ route('cart.addToCart', ['id' => $product->id, 'pdct_name' => $product->pdct_name, 'pdct_qty' => 1]) }}"
+                                class="btn btn-primary">Add to Cart</a> --}}
+
+                            <form action="{{ route('cart.addToCart', ['product_id' => $product->id, 'quantity' => 1]) }}"
+                                method="post">
+                                @csrf
+                                @method('post')
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
 

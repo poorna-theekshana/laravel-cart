@@ -11,7 +11,7 @@ class ProductController extends Controller
     public function welcomeproducts()
     {
         $products = Product::all();
-        return view('welcome', ['products' => $products, 'title' => "I just passed this from the backend "]);
+        return view('welcome', ['products' => $products, 'title' => "I just passed this from the backend ", 'hasItemAdded' => false]);
     }
 
     public function index()
