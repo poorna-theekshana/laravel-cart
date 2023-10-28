@@ -11,8 +11,23 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = UserCart::all();
-        return view('cart.viewcart', ['cartItems' => $cartItems]);
+        $user = Auth::user();
+        $selectedCartItems = UserCart::where('user_id', $user->id)->get();
+
+        $cartData = [];
+        $totalAmount = 0;
+
+        foreach ($selectedCartItems as $cartItem) {
+            $product = Product::find($cartItem->product_id);
+            $cartData[] = [
+                'cartItemId' => $cartItem->id,
+                'product' => $product,
+                'quantity' => $cartItem->quantity,
+            ];
+            $totalAmount += $product->pdct_price * $cartItem->quantity;
+        }
+
+        return view('cart.viewcart', ['cartData' => $cartData, 'totalAmount' => $totalAmount]);
     }
 
     public function addToCart(Request $request)
@@ -32,33 +47,37 @@ class CartController extends Controller
                 'product_id' => $request->product_id,
             ];
 
-            UserCart::updateOrCreate($data, [
-                'quantity' => $selectedCartItem->quantity + 1,
-            ]);
+            if ($selectedProductItem->pdct_qty > 0) {
+                if ($selectedCartItem) {
+                    UserCart::updateOrCreate($data, [
+                        'quantity' => $selectedCartItem->quantity + 1,
+                    ]);
+                } else {
+                    UserCart::create([
+                        'user_id' => $user->id,
+                        'product_id' => $request->product_id,
+                        'quantity' => 1,
+                    ]);
+                }
 
-            $selectedProductItem->decrement('pdct_qty', 1);
-            $selectedProductItem->save();
+                $selectedProductItem->decrement('pdct_qty', 1);
+                $selectedProductItem->save();
 
-            return redirect()->route('welcome')->with('success', 'Item added to the cart succesfully!');
+                return redirect()->route('welcome')->with('success', 'Item added to the cart succesfully!');
+            } else {
+                return redirect()->route('welcome')->with('warning', 'Selected item is out of stock!');
+            }
+
         }
 
         return redirect()->route('welcome')->with('warning', 'Error occured while adding to the cart!');
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validate the incoming request data
-    //     $data = $request->validate([
-    //         'user_id' => 'required|numeric',
-    //         'product_id' => 'required|numeric',
-    //         'quantity' => 'required|numeric',
-    //     ]);
-
-    //     // Create a new user cart record
-    //     UserCart::create($data);
-
-    //     return redirect()->route('cart.view')->with('success', 'Item added to the cart successfully.');
-    // }
+    public function delete(Request $product)
+    {
+        $product->delete();
+        return redirect(route('product.index'))->with('success', 'Product deleted succesfully');
+    }
 
     public function create()
     {

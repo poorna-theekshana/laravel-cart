@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\UserCart;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,7 +12,7 @@ class ProductController extends Controller
     public function welcomeproducts()
     {
         $products = Product::all();
-        return view('welcome', ['products' => $products, 'title' => "I just passed this from the backend ", 'hasItemAdded' => false]);
+        return view('welcome', ['products' => $products, 'title' => "I just passed this from the backend "]);
     }
 
     public function index()
@@ -64,9 +65,11 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Product updated succesfully');
     }
 
-    public function delete(Product $product)
+    public function delete(Request $request)
     {
+        $product = UserCart::find($request->cartItemId);
         $product->delete();
-        return redirect(route('product.index'))->with('success', 'Product deleted succesfully');
+
+        return redirect(route('cart.index'))->with('success', 'Product deleted succesfully');
     }
 }

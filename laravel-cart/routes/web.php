@@ -21,6 +21,7 @@ Route::group(['middleware' => 'isAdmin'], function () {
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::delete('/cart', [ProductController::class, 'delete'])->name('cart.delete');
 
 //User Access Routes
 Route::group(['middleware' => 'isUser'], function () {
