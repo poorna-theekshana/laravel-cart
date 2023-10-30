@@ -53,7 +53,8 @@
                                 </tbody>
                             </table>
                             <hr>
-                            <p>{{ $totalAmount }}</p>
+                            <h1>Total Amount: {{ $totalAmount }}</h1>
+                            <hr>
                             <form
                                 action="{{ route('cart.checkout', ['cartItemId' => $cartItem['cartItemId'], 'totalAmount' => $totalAmount]) }}"
                                 method="post">
