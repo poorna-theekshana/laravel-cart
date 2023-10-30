@@ -11,6 +11,11 @@
             {{ session('warning') }}
         </div>
     @endif
+    @if (session()->has('message'))
+        <div class="alert alert-primary">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="row top-space ">
         @foreach (array_chunk($products->all(), 3) as $chunk)
             @foreach ($chunk as $product)

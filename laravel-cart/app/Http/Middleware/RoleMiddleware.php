@@ -16,13 +16,7 @@ class RoleMiddleware
             return $next($request);
         }
 
-        return redirect('/home')->with('message', 'Access Denied.')->with('alert', 'danger');
-    }
-
-    public function viewroles()
-    {
-        $roles = User::pluck('role', 'id'); 
-        return view('product.index', ['role' => $roles]);
+        return redirect('/')->with('message', 'Access Denied.')->with('alert', 'danger');
     }
 
 }
