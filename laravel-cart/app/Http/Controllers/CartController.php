@@ -67,60 +67,16 @@ class CartController extends Controller
             } else {
                 return redirect()->route('welcome')->with('warning', 'Selected item is out of stock!');
             }
-
         }
 
         return redirect()->route('welcome')->with('warning', 'Error occured while adding to the cart!');
     }
 
-    public function delete(Request $product)
+    public function delete(Request $request)
     {
+        $product = UserCart::find($request->cartItemId);
         $product->delete();
-        return redirect(route('product.index'))->with('success', 'Product deleted succesfully');
-    }
 
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect(route('cart.index'))->with('success', 'Product deleted succesfully');
     }
 }

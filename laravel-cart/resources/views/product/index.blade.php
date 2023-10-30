@@ -2,7 +2,7 @@
 
 @section('content')
     @if (session()->has('success'))
-        <div>
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
@@ -52,7 +52,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="{{ route('product.delete', ['product' => $product]) }}"
+                                            <form action="{{ route('product.delete', ['product' => $product->id]) }}"
                                                 method="post"
                                                 onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                 @csrf
