@@ -16,7 +16,7 @@
 <body>
     <div id="app">
         <main class="py-4">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mt-0 mb-5">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <h1 class="font-weight-bold">{{ config('app.name') }}</h1>
@@ -77,7 +77,7 @@
                             @else
                                 <div class="text-right">
                                     <li class="nav-item">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
+                                        <a id="navbarDropdown" class="nav-link" href="#"
                                             role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false" v-pre>
                                             {{ Auth::user()->name }}

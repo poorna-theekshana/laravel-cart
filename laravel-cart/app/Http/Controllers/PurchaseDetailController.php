@@ -10,14 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class PurchaseDetailController extends Controller
 {
-    public function index(){
-        $data=PurchaseDetail::all();
-        return view("cart.purchaseInfo",['purchases' => $data]);
+    public function index()
+    {
+        $data = PurchaseDetail::all();
+        return view("cart.purchaseInfo", ['purchases' => $data]);
     }
 
-    public function userindex(){
-        $purchase = PurchaseDetail::where('user_id', Auth::user()->id)->get();
-        return view("cart.userpurchaseInfo",['userpurchases' => $purchase]);
+    public function userindex()
+    {
+        $purchases = PurchaseDetail::where('user_id', Auth::user()->id)
+            ->selectRaw('purchase_id, MAX(created_at) as date_created, SUM(price) as total_amount')
+            ->groupBy('purchase_id')
+            ->get();
+
+        $purchaseDetails = PurchaseDetail::whereIn('purchase_id', $purchases->pluck('purchase_id'))->get();
+
+        return view("cart.userpurchaseInfo", ['userpurchases' => $purchases, 'purchaseDetails' => $purchaseDetails]);
     }
 
     public function checkout(Request $request)
@@ -40,6 +48,8 @@ class PurchaseDetailController extends Controller
                 'product_id' => $cartItem->product_id,
                 'quantity' => $cartItem->quantity,
                 'price' => $product->pdct_price * $cartItem->quantity,
+                'product_name' => $product->pdct_name,
+                'description' => $product->pdct_description,
             ]);
 
             $selectedCartItem->delete();

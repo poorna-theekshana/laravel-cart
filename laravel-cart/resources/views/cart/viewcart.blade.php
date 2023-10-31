@@ -14,7 +14,7 @@
                     <div class="table-responsive">
                         @if ($cartData)
                             <table class="table table-striped table-bordered">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
@@ -53,9 +53,10 @@
                                 </tbody>
                             </table>
                             <hr>
-                            <h1>Total Amount: {{ $totalAmount }}</h1>
+                            <h2 class="text-right">Total Amount: {{ $totalAmount }}</h2>
                             <hr>
                             <form
+                                class="btn btn-primary btn-block"
                                 action="{{ route('cart.checkout', ['cartItemId' => $cartItem['cartItemId'], 'totalAmount' => $totalAmount]) }}"
                                 method="post">
                                 @csrf

@@ -27,10 +27,8 @@
                                     <th>Date Created</th>
                                     <th>Date Modified</th>
                                     <th>Image</th>
-                                    {{-- @if (auth()->user()->role == 1) --}}
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    {{-- @endif --}}
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +41,8 @@
                                         <td>{{ $product->pdct_qty }}</td>
                                         <td>{{ $product->created_at }}</td>
                                         <td>{{ $product->updated_at }}</td>
-                                        <td><img src="{{ asset($product->image) }}" class="card-img-top resized-table-image" alt="{{ $product->pdct_name }}"></td>
+                                        <td><img src="{{ asset($product->image) }}" class="card-img-top resized-table-image"
+                                                alt="{{ $product->pdct_name }}"></td>
                                         <td>
                                             <form action="{{ route('product.edit', ['product' => $product]) }}"
                                                 method="get">

@@ -11,14 +11,7 @@ class ProductController extends Controller
     public function welcomeproducts()
     {
         $products = Product::all();
-        return view('welcome', ['products' => $products, 'title' => "I just passed this from the backend "]);
-    }
-
-    public function index()
-    {
-        $products = Product::all();
-        return view('product.index', ['products' => $products]);
-
+        return view('welcome', ['products' => $products]);
     }
 
     public function create()
@@ -37,9 +30,10 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imageFile = $request->file('image');
-            $imagePath = $imageFile->store('public/assets/images/product_images');
-            $data['image'] = str_replace('public/', 'storage/', $imagePath);
+            $path = $request->file('image')->store('public/assets/images/product_images');
+            $path = str_replace('public/', 'storage/', $path);
+
+            $data['image'] = $path;
         }
 
         $newProduct = Product::create($data);
@@ -58,7 +52,16 @@ class ProductController extends Controller
             'pdct_description' => 'required',
             'pdct_price' => 'required | decimal:0,2',
             'pdct_qty' => 'required | numeric',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/assets/images/product_images');
+            $path = str_replace('public/', 'storage/', $path);
+            $data['image'] = $path;
+        } else {
+            $data['image'] = $product->image;
+        }
 
         $product->update($data);
         return redirect(route('product.index'))->with('success', 'Product updated succesfully');
@@ -70,4 +73,10 @@ class ProductController extends Controller
         return redirect(route('product.index'))->with('success', 'Product deleted successfully');
     }
 
+    public function index()
+    {
+        $products = Product::all();
+        return view('product.index', ['products' => $products]);
+
+    }
 }
