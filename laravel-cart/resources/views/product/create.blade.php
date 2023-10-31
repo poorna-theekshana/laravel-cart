@@ -19,22 +19,22 @@
 
         <div class="form-group">
             <label for="pdct_name">Name :</label>
-            <input type="text" class="form-control" name="pdct_name" placeholder="Product Name" required>
+            <input type="text" class="form-control" name="pdct_name" placeholder="Product Name" >
         </div>
 
         <div class="form-group">
             <label for="pdct_description">Description :</label>
-            <input type="text" class="form-control" name="pdct_description" placeholder="Product Description" required>
+            <input type="text" class="form-control" name="pdct_description" placeholder="Product Description" >
         </div>
 
         <div class="form-group">
             <label for="pdct_price">Price : Rs.</label>
-            <input type="number" step="any" class="form-control" name="pdct_price" placeholder="Product Price" required>
+            <input type="number" step="any" class="form-control" name="pdct_price" placeholder="Product Price" >
         </div>
 
         <div class="form-group">
             <label for="pdct_qty">Quantity :</label>
-            <input type="number" class="form-control" name="pdct_qty" placeholder="Product Quantity" required>
+            <input type="number" class="form-control" name="pdct_qty" placeholder="Product Quantity" >
         </div>
 
         <div class="form-group">

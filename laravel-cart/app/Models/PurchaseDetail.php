@@ -9,5 +9,10 @@ class PurchaseDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['purchase_id', 'user_id', 'product_id', 'quantity', 'price'];
+    protected $fillable = ['purchase_id', 'user_id', 'product_id', 'quantity', 'price','product_name','description'];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'product_id', 'id');
+    }
 }
