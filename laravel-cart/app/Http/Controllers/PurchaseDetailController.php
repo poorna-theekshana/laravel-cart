@@ -12,8 +12,17 @@ class PurchaseDetailController extends Controller
 {
     public function index()
     {
-        $data = PurchaseDetail::all();
-        return view("cart.purchaseInfo", ['purchases' => $data]);
+        // $data = PurchaseDetail::all();
+        // return view("cart.purchaseInfo", ['purchases' => $data]);
+
+        $purchases = PurchaseDetail::selectRaw('purchase_id, MAX(created_at) as date_created, SUM(price) as total_amount')
+            ->groupBy('purchase_id')
+            ->get();
+
+        $purchaseDetails = PurchaseDetail::whereIn('purchase_id', $purchases->pluck('purchase_id'))->get();
+
+        return view("cart.purchaseInfo", ['userpurchases' => $purchases, 'purchaseDetails' => $purchaseDetails]);
+
     }
 
     public function userindex()

@@ -34,7 +34,7 @@
                                                 <td>{{ $cartItem['product']->pdct_description }}</td>
                                                 <td>{{ $cartItem['product']->pdct_price }}</td>
                                                 <td>{{ $cartItem['quantity'] }}</td>
-                                                <td><img src="{{ asset($cartItem['product']->image) }}"
+                                                <td><img src="{{ asset($cartItem['product']->getImageURL()) }}"
                                                         class="card-img-top resized-table-image"
                                                         alt="{{ $cartItem['product']->pdct_name }}"></td>
                                                 <td>

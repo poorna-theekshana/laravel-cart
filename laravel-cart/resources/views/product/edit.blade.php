@@ -39,7 +39,7 @@
 
         <div class="form-group">
             <label for="current_image">Current Image:</label>
-            <img src="{{ asset($product->image) }}" class="img-thumbnail resized-edit-image" alt="{{ $product->pdct_name }}">
+            <img src="{{ asset($product->getImageURL()) }} class="img-thumbnail resized-edit-image" alt="{{ $product->pdct_name }}">
         </div>
 
         <div class="form-group">

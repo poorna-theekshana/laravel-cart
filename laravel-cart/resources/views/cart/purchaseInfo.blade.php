@@ -7,41 +7,76 @@
         </div>
     @endif
 
+    {{-- <div>
+        <table>
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div> --}}
+
+
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-12">
             <div class="card">
-                <h5 class="card-header">All Purchase Details</h5>
+                <h5 class="card-header">Purchase Details</h5>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Purchase Id</th>
-                                    <th>User Id</th>
-                                    <th>Product Id</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Date Created</th>
-                                    <th>Date Modified</th>
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Purchase ID</th>
+                                <th>Date Created</th>
+                                <th>Total Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($userpurchases as $purchase)
+                                <tr class="table-active">
+                                    <td>{{ $purchase->purchase_id }}</td>
+                                    <td>{{ $purchase->date_created }}</td>
+                                    <td>{{ $purchase->total_amount }}</td>
+                                    <td>
+                                        <a class="expand-button btn dropdown-toggle" data-toggle="collapse"
+                                            href="#details-{{ $purchase->purchase_id }}">
+                                            View Details
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($purchases as $purchase)
-                                    <tr>
-                                        <td>{{ $purchase->id }}</td>
-                                        <td>{{ $purchase->purchase_id }}</td>
-                                        <td>{{ $purchase->user_id }}</td>
-                                        <td>{{ $purchase->product_id }}</td>
-                                        <td>{{ $purchase->quantity }}</td>
-                                        <td>{{ $purchase->price }}</td>
-                                        <td>{{ $purchase->created_at }}</td>
-                                        <td>{{ $purchase->updated_at }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                <tr class="collapse" id="details-{{ $purchase->purchase_id }}">
+                                    <td colspan="4">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product ID</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($purchaseDetails as $purchaseDetail)
+                                                    @if ($purchaseDetail->purchase_id === $purchase->purchase_id)
+                                                        <tr>
+                                                            <td>{{ $purchaseDetail->product_id }}</td>
+                                                            <td>{{ $purchaseDetail->product_name }}</td>
+                                                            <td>{{ $purchaseDetail->description }}</td>
+                                                            <td>{{ $purchaseDetail->quantity }}</td>
+                                                            <td>{{ $purchaseDetail->price }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
