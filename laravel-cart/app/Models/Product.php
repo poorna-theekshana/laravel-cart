@@ -16,4 +16,11 @@ class Product extends Model
         'pdct_qty',
         'image',
     ];
+
+    public function getImageURL(){
+        if($this->image){
+            return url('storage/'.$this->image);
+        }
+        return $this->pdct_name;
+    }
 }

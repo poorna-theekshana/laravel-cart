@@ -29,12 +29,17 @@ class ProductController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/assets/images/product_images');
-            $path = str_replace('public/', 'storage/', $path);
-
+        if ($request->has('image')) {
+            $path = $request->file('image')->store('product', 'public');
             $data['image'] = $path;
         }
+
+        // if ($request->hasFile('image')) {
+        //     $path = $request->file('image')->store('public/assets/images/product_images');
+        //     $path = str_replace('public/', 'storage/', $path);
+
+        //     $data['image'] = $path;
+        // }
 
         $newProduct = Product::create($data);
 
@@ -48,16 +53,15 @@ class ProductController extends Controller
     public function update(Product $product, request $request)
     {
         $data = $request->validate([
-            'pdct_name' => 'required',
-            'pdct_description' => 'required',
-            'pdct_price' => 'required | decimal:0,2',
-            'pdct_qty' => 'required | numeric',
+            'pdct_name' => 'nullable',
+            'pdct_description' => 'nullable',
+            'pdct_price' => 'nullable | decimal:0,2',
+            'pdct_qty' => 'nullable | numeric',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/assets/images/product_images');
-            $path = str_replace('public/', 'storage/', $path);
+            $path = $request->file('image')->store('product', 'public');
             $data['image'] = $path;
         } else {
             $data['image'] = $product->image;
