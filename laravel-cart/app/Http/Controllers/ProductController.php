@@ -30,16 +30,9 @@ class ProductController extends Controller
         ]);
 
         if ($request->has('image')) {
-            $path = $request->file('image')->store('product', 'public');
+            $path = $request->file('image')->store('product','public');
             $data['image'] = $path;
         }
-
-        // if ($request->hasFile('image')) {
-        //     $path = $request->file('image')->store('public/assets/images/product_images');
-        //     $path = str_replace('public/', 'storage/', $path);
-
-        //     $data['image'] = $path;
-        // }
 
         $newProduct = Product::create($data);
 

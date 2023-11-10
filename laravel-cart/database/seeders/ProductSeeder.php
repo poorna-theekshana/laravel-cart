@@ -14,8 +14,8 @@ class ProductSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 3) as $index) {
-            $imagePath = 'assets/images/product_images/' . $faker->md5 . '.jpg';
+        foreach (range(1, 9) as $index) {
+            $imagePath = 'product/' . $faker->md5 . '.jpg';
 
             Product::factory()->create([
                 'pdct_name' => $faker->word,

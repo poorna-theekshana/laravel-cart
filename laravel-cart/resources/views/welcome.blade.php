@@ -21,7 +21,7 @@
             @foreach ($chunk as $product)
                 <div class="col-md-4 p-3">
                     <div class="card text-center" style="">
-                        <img class="card-img-top" src="{{ asset($product->getImageURL()) }}" alt="Card image cap">
+                        <img class="rounded card-img-top img-thumbnail" src="{{ asset($product->getImageURL()) }}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->pdct_name }}</h5>
                             <p class="card-text">{{ $product->pdct_description }}</p>
